@@ -34,6 +34,7 @@ server.listen(8081, function() {
           playerId: socket.id,
           team: (Math.floor(Math.random() * 2) == 0) ? 'red' : 'blue',
           animation: "stop",
+          health: 100,
         };
 
         // send the players object to the new player
