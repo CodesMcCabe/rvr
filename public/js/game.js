@@ -120,26 +120,28 @@ function create() {
         key: 'atk-left',
         frames: this.anims.generateFrameNumbers('attack', { frames: [1, 5, 9] }),
         frameRate: 60,
-        loop: false
+        loop: false,
+        onComplete: resetAttack,
     });
     this.anims.create({
         key: 'atk-right',
         frames: this.anims.generateFrameNumbers('attack', { frames: [2, 6, 10] }),
         frameRate: 60,
-        loop: false
+        loop: false,
+        onComplete: resetAttack,
     });
     this.anims.create({
         key: 'atk-up',
         frames: this.anims.generateFrameNumbers('attack', { frames: [3, 7, 11] }),
         frameRate: 60,
-        loop: false
+        loop: false,
+        onComplete: resetAttack,
     });
     this.anims.create({
         key: 'atk-down',
         frames: this.anims.generateFrameNumbers('attack', { frames: [0, 4, 8] }),
         frameRate: 60,
         loop: false,
-        onComplete: resetAttack,
     });
 
 
@@ -148,23 +150,6 @@ function create() {
 
 function resetAttack() {
     this.attack = false;
-    // debugger
-    // switch(this.currentPlayerDirection) {
-    //     case 'left':
-    //         this.player.anims.play('left', false);
-    //         break;
-    //     case 'right':
-    //         this.player.anims.play('right', false);
-    //         break;
-    //     case 'up':
-    //         this.player.anims.play('up', false);
-    //         break;
-    //     case 'down':
-    //         this.player.anims.play('down', false);
-    //         break;
-    //     default:
-    //         break;
-    // }
 }
 
 function onMeetEnemy(player, zone) {
@@ -203,6 +188,7 @@ function update() {
         this.player.body.setVelocity(0);
         if (this.cursors.left.isDown)
         {
+            // debugger
             this.player.body.setVelocityX(-100);
             this.player.anims.play('left', true);
             // this.player.flipX = true;
@@ -251,6 +237,27 @@ function update() {
                 default:
                     break;
             }
+        }
+        else if (this.attack && this.player.anims.currentFrame.index === 2)
+        {
+            console.log('hit');
+            switch(this.currentPlayerDirection) {
+                case 'left':
+                    this.player.body.setSize(30, 20, 30, 10);
+                    break;
+                case 'right':
+                    this.player.body.setSize(20, 20, 10, 10);
+                    break;
+                case 'up':
+                    this.player.body.setSize(20, 20, 10, 10);
+                    break;
+                case 'down':
+                    this.player.body.setSize(20, 20, 10, 10);
+                    break;
+                default:
+                    break;
+            }
+            resetAttack();
         }
         else if (!this.attack)
         {
